@@ -3,6 +3,7 @@ import React from 'react'
 import { useState } from 'react/cjs/react.development';
 import { auth } from '../firebase'
 import { useNavigation } from '@react-navigation/native';
+import { db } from '../firebase';
 
 const Home = () => {
 
@@ -17,6 +18,29 @@ const Home = () => {
   }
 
 
+  // ADD A BOOK
+    const [title, setTitle] = useState("");
+    const [author, setAuthor] = useState("");
+
+    const addBook = () => {
+      if (title !== "" && author !== "") {
+        db.collection("books").doc().set({
+          author: author,
+          title: title
+        
+      })
+      .then(() => {
+          console.log("Document successfully written!");
+      }).catch((error) => {
+        console.error("Error writing document: ", error);
+    });
+  
+        setTitle("");
+        setAuthor("");
+      }
+    } 
+
+
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
         <Text>Email: {auth.currentUser?.email}</Text>
@@ -26,7 +50,7 @@ const Home = () => {
  
         <Text>Dodawanie:</Text>
 
-       {/*  <TextInput placeholder="title" value={title} onChangeText={(text) => {setTitle(text)}}
+        <TextInput placeholder="title" value={title} onChangeText={(text) => {setTitle(text)}}
                 style={styles.textBoxes}></TextInput> 
 
         <TextInput placeholder="author" value={author} onChangeText={(text) => {setAuthor(text)}}
@@ -34,7 +58,7 @@ const Home = () => {
 
         <TouchableOpacity onPress={addBook} style={styles.button}>
             <Text style={styles.buttonText}>Add</Text>
-        </TouchableOpacity> */}
+        </TouchableOpacity>
     </KeyboardAvoidingView>
   )
 }
@@ -42,59 +66,17 @@ const Home = () => {
 export default Home
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#CCCCFF',
-        alignItems: 'center',
-        justifyContent: 'center',
-      },
-
-      inputContainer: {
-          width: '80%'
-      },
-    
-      textBoxes: {
-        fontSize: 18,
-        padding: 12,
-        borderColor: 'black',
-        borderWidth: 0.2,
-        borderRadius: 5,
-        marginTop: 5,
-        backgroundColor: 'white',
-    
-      },
-
-      buttonContainer: {
-          width: '60%',
-          alignItems: 'center',
-          justifyContent: 'center', 
-          marginTop: 30
-      },
-
-      button: {
-        backgroundColor: '#841584',
-        width: '100%',
-        padding: 12,
-        borderRadius: 10,
-        alignItems: 'center',
-
-      },
-
-      buttonText: {
-        color: 'white',
-        fontSize: 16,
-      },
-
-      registerButton: {
-        backgroundColor: 'white',
-        marginTop: 5,
-        borderColor: '#841584',
-        borderWidth: 2
-
-      },
-
-      registerButtonText: {
-        color: '#841584',
-        fontSize: 16,
-      }
-})
+    button: {
+      backgroundColor: '#841584',
+      width: '100%',
+      padding: 12,
+      borderRadius: 10,
+      alignItems: 'center',
+  
+    },
+  
+    buttonText: {
+      color: 'white',
+      fontSize: 16,
+    },
+  }) 
