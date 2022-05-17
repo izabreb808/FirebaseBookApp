@@ -44,6 +44,10 @@ import { SafeAreaView } from 'react-native-safe-area-context';
         setModalVisible(false); 
     }
 
+    async function deleteData(){
+        await ref.doc(id).delete();
+        setModalVisible(false); 
+    }
 
 
 
@@ -74,10 +78,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
            right={props => (
             <TouchableOpacity onPress={modifyBook} style={styles.modalButton}>
                 
-                    <List.Icon icon={'marker'} style={styles.icons} />
-                    {/* <List.Icon icon={'pencil'} style={styles.icons} /> */}
-                
-                
+                <List.Icon icon={'pencil'} style={styles.icons}></List.Icon>
                 <Modal animationType="fade" visible={isModalVisible} 
                     onRequestClose={() => setModalVisible(false)} >
                     <ScrollView style={styles.modalView}>
@@ -89,9 +90,17 @@ import { SafeAreaView } from 'react-native-safe-area-context';
                                 style={styles.modalTextBoxes} editable={true}></TextInput>
 
                         <View style={styles.horizontal}>
-                        <Button onPress={() => closeModal()} style={styles.buttonM} title='x'></Button> 
-                        <Button onPress={() => saveEdit()} style={styles.buttonM} title='modify'></Button> 
-                        <Button style={styles.buttonM} title='delete'></Button> 
+                       
+                        <TouchableOpacity onPress={() => saveEdit()} style={styles.buttonM} title='modify'>
+                            <Text style={styles.textM}>modify</Text>
+                        </TouchableOpacity> 
+                        <TouchableOpacity onPress={() => deleteData()} style={styles.buttonM} title='delete'>
+                            <Text style={styles.textM}>delete</Text>
+                        </TouchableOpacity> 
+                        <TouchableOpacity onPress={() => closeModal()} style={styles.buttonM} title='x'>
+                            <Text style={styles.textM}>close</Text>
+                        </TouchableOpacity> 
+
                         
 
                         </View>
@@ -122,6 +131,7 @@ const styles = StyleSheet.create({
     },
 
     modalView: {
+        height: '100%',
         width: '100%',
         backgroundColor: 'white',
         
@@ -129,7 +139,7 @@ const styles = StyleSheet.create({
 
     modalButton: {
         width: '50%',
-        
+       
 
     },
 
@@ -174,9 +184,17 @@ const styles = StyleSheet.create({
       },
 
       buttonM: {
-        width: '20%',
-        padding: 1,
-        fontSize: 12
+        width: 42,
+        margin: 5,
+        alignItems: 'center',
+        backgroundColor: '#841584',
+        borderRadius: 10,
+      },
+
+      textM: {
+        fontSize: 10,
+        
+        color: 'white',
       }
 
 
