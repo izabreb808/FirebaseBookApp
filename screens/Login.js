@@ -49,8 +49,9 @@ const Login = () => {
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
+
         <View style={styles.inputContainer}>
-            <Text>test</Text>
+         
             <TextInput placeholder="email" 
             value={email} onChangeText={(text) => {setEmail(text)}}
             style={styles.textBoxes}></TextInput> 
@@ -83,6 +84,7 @@ export default Login
 
 const styles = StyleSheet.create({
     container: {
+
         flex: 1,
         backgroundColor: '#CCCCFF',
         alignItems: 'center',
@@ -90,7 +92,8 @@ const styles = StyleSheet.create({
       },
 
       inputContainer: {
-          width: '80%'
+          width: '80%',
+          marginTop: 100
       },
     
       textBoxes: {

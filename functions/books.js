@@ -5,7 +5,6 @@ import { TouchableOpacity, StyleSheet, Text, TextInput, View, Button, ScrollView
 import { useState, useEffect } from 'react/cjs/react.development';
 import { List, Modal } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
-//import { TouchableHighlight } from 'react-native-web';
 
  function Books({ id, title, author, read }){
 
@@ -26,10 +25,21 @@ import { SafeAreaView } from 'react-native-safe-area-context';
     const [newAuthor, setNewAuthor] = useState("");
     const [isModalVisible, setModalVisible] = useState(false);
 
+  /*   const [visible, setVisible] = React.useState(false);
+
+    const showDialog = () => setVisible(true);
+  
+    const hideDialog = () => setVisible(false); */
+   
+    const isVisible = false;
+
     const modifyBook = () => {
         setModalVisible(true);
         setNewTitle(title);
         setNewAuthor(author);
+        
+
+        
         //console.log('tytul aktualny --------', title);
         //console.log('tytul nowy --------', newTitle);
     }
@@ -42,18 +52,21 @@ import { SafeAreaView } from 'react-native-safe-area-context';
                 author: newAuthor       
         })
         setModalVisible(false); 
+     
     }
 
     async function deleteData(){
         await ref.doc(id).delete();
         setModalVisible(false); 
+       
     }
 
 
 
 
     const closeModal = () => {
-        setModalVisible(false); 
+        setModalVisible(false);
+      
     }
 
 
@@ -61,7 +74,10 @@ import { SafeAreaView } from 'react-native-safe-area-context';
       
          <List.Item
             //title={`${title} - ${author}`}
-           title={title}
+           title ={props => (
+               <Text style={styles.title}>{"\"" + title + "\""}</Text>
+           )
+        }
            // onPress={() => bookRead()}
              left={props => (
                  <TouchableOpacity onPress={() => bookRead()} style={styles.button }>
@@ -70,16 +86,11 @@ import { SafeAreaView } from 'react-native-safe-area-context';
             )} 
 
             description={props => (
-                <SafeAreaView>
-                    <Text >{author}</Text>
-                </SafeAreaView>
-            )} 
-
-           right={props => (
-            <TouchableOpacity onPress={modifyBook} style={styles.modalButton}>
-                
-                <List.Icon icon={'pencil'} style={styles.icons}></List.Icon>
-                <Modal animationType="fade" visible={isModalVisible} 
+                <View style={styles.area}>  
+               
+                    <TouchableOpacity onPress={modifyBook} style={isModalVisible ? styles.modalButtonModify : styles.modalButton}>
+                    <Text style={styles.author}>{author}</Text>  
+                 <Modal animationType="fade" visible={isModalVisible} 
                     onRequestClose={() => setModalVisible(false)} >
                     <ScrollView style={styles.modalView}>
                     
@@ -99,18 +110,19 @@ import { SafeAreaView } from 'react-native-safe-area-context';
                         </TouchableOpacity> 
                         <TouchableOpacity onPress={() => closeModal()} style={styles.buttonM} title='x'>
                             <Text style={styles.textM}>close</Text>
-                        </TouchableOpacity> 
+                        </TouchableOpacity>                   
 
-                        
-
-                        </View>
-                        
-                        
+                        </View>   
                        
                     </ScrollView>           
                 </Modal> 
             </TouchableOpacity>   
-       )} 
+                </View>
+            )} 
+
+          /*  right={props => (
+            
+       )}  */
             
            
             
@@ -125,32 +137,43 @@ export default React.memo(Books);
 
 const styles = StyleSheet.create({
 
+    area: {
+        marginTop: 5,
+      
+    },
+
     button: {
         width: '10%',
         
+       
     },
 
     modalView: {
+        
         height: '100%',
         width: '100%',
         backgroundColor: 'white',
         
     },
 
-    modalButton: {
-        width: '50%',
-       
+    modalButton: {  
+        width: '100%',
+    },
+
+    modalButtonModify: {
+        height: 155,
 
     },
 
     modalTextBoxes: {
-        fontSize: 8,
+        fontSize: 14,
         width: '90%',
         height: 30,
         padding: 5,
         margin: 5,
         borderWidth: 0.2,
         borderRadius: 5,
+
         
     },
 
@@ -179,22 +202,34 @@ const styles = StyleSheet.create({
 
       horizontal: {
           flex: 2,
-          flexDirection: 'row'
-          
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'center',
       },
 
       buttonM: {
-        width: 42,
-        margin: 5,
+        width: 60,
+        height: 25,
+        margin: 10,
         alignItems: 'center',
         backgroundColor: '#841584',
         borderRadius: 10,
       },
 
       textM: {
-        fontSize: 10,
+        fontSize: 14,
         
         color: 'white',
+      },
+
+      author: {
+          marginLeft: 10,
+          marginTop: 8,
+      },
+
+      title: {
+        marginLeft: 5,
+        fontSize: 18,
       }
 
 
