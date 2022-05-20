@@ -5,10 +5,14 @@ import { TouchableOpacity, StyleSheet, Text, TextInput, View, Button, ScrollView
 import { useState, useEffect } from 'react/cjs/react.development';
 import { List, Modal } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { auth } from '../firebase'
 
  function Books({ id, title, author, read }){
 
-    const ref = db.collection('books');
+    //const ref = db.collection('books');
+    let x = "books_" + auth.currentUser?.email.toString();
+    console.log("dzialam ", x);
+    const ref = db.collection(x);
 
     async function bookRead() {
         await ref.doc(id).update({
@@ -16,7 +20,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
         });
     }
 
-    console.log(author);
+   // console.log(author);
 
 
     // MODIFY
@@ -30,8 +34,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
     const showDialog = () => setVisible(true);
   
     const hideDialog = () => setVisible(false); */
-   
-    const isVisible = false;
+
 
     const modifyBook = () => {
         setModalVisible(true);

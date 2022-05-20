@@ -48,7 +48,7 @@ const Login = () => {
 
 
   return (
-    <KeyboardAvoidingView style={styles.container} behavior="padding">
+    <View style={styles.container} behavior="padding">
 
         <View style={styles.inputContainer}>
          
@@ -76,7 +76,7 @@ const Login = () => {
       </View>
 
 
-    </KeyboardAvoidingView>
+    </View>
   )
 }
 
