@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
     container: {
 
         flex: 1,
-        backgroundColor: '#CCCCFF',
+        backgroundColor: '#DFE6F6',
         alignItems: 'center',
         justifyContent: 'center',
       },
@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
       },
 
       button: {
-        backgroundColor: '#841584',
+        backgroundColor: '#8DB2FF',
         width: '100%',
         padding: 12,
         borderRadius: 10,
@@ -131,13 +131,13 @@ const styles = StyleSheet.create({
       registerButton: {
         backgroundColor: 'white',
         marginTop: 5,
-        borderColor: '#841584',
+        borderColor: '#8DB2FF',
         borderWidth: 2
 
       },
 
       registerButtonText: {
-        color: '#841584',
+        color: '#8DB2FF',
         fontSize: 16,
       }
 })

@@ -129,7 +129,7 @@ const Home = () => {
     <View style={styles.container} behavior="padding">
 
 
-      <View style={{height: '12%', marginBottom: 5}}>
+      <View style={{marginBottom: 5, height: '9%'}}>
         <View style={styles.horizontal}>
               <Text style={{fontSize: 15, width: '80%'}}>Email: {auth.currentUser?.email}</Text>
               <TouchableOpacity icon="log-out" onPress={signOut} style={{width: '20%'}}>
@@ -146,29 +146,26 @@ const Home = () => {
 
         <FlatList style={styles.list} 
          ListHeaderComponent={()=>
-          readBooksVisible ? <Text>Your list of books:</Text> : <Text>Your list of read books:</Text>} 
+          readBooksVisible ? <Text style={styles.header}>Your list of books:</Text> : <Text style={styles.header}>Your list of read books:</Text>} 
               data={readBooksVisible ? allbooks : readbooks}   
             keyExtractor={(item) => item.id} 
             
             renderItem={({ item }) =>  
               <Books {...item} />
             } 
-       
-           
-            
-            >
-            </FlatList> 
+            > </FlatList> 
       </ScrollView>
-
-      <TouchableOpacity onPress={changeView} style={styles.add}>
-            <Text style={{fontSize: 20}}> Change list </Text> 
-          </TouchableOpacity>
 
       
       <Provider>
-        <View>
-          <TouchableOpacity onPress={showDialog} style={styles.add}>
-            <Text style={{fontSize: 20}}> Add a book </Text> 
+        <View style={{flex: 2, flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
+
+        <TouchableOpacity onPress={changeView} style={[styles.add, styles.button]}>
+            <Text style={styles.buttonText}> {readBooksVisible ? 'Read books' : 'All books'} </Text> 
+      </TouchableOpacity>
+
+          <TouchableOpacity onPress={showDialog} style={[styles.add, styles.button]}>
+            <Text style={styles.buttonText}> Add a book </Text> 
           </TouchableOpacity>
           <Portal>
             <Dialog visible={visible} onDismiss={hideDialog}>
@@ -177,17 +174,17 @@ const Home = () => {
               <Dialog.Content>
                 <Paragraph>This is simple dialog</Paragraph>
                 <TextInput placeholder="title" value={title} onChangeText={(text) => {setTitle(text)}}
-                    style={styles.textBoxes}></TextInput> 
+                    style={styles.textBoxes} autoCorrect={false}></TextInput> 
 
                 <TextInput placeholder="author" value={author} onChangeText={(text) => {setAuthor(text)}}
-                    style={styles.textBoxes}></TextInput> 
+                    style={styles.textBoxes} autoCorrect={false}></TextInput> 
                 </Dialog.Content>
 
                 <Dialog.Actions>
-                  <TouchableOpacity onPress={hideDialog} style={styles.button}>
+                  <TouchableOpacity onPress={hideDialog} style={[styles.button, styles.add]}>
                     <Text style={styles.buttonText}> Close </Text> 
                   </TouchableOpacity>
-                  <TouchableOpacity onPress={addBook} style={styles.button}>
+                  <TouchableOpacity onPress={addBook} style={[styles.button, styles.add]}>
                       <Text style={styles.buttonText}>Add</Text>
                   </TouchableOpacity>       
                 </Dialog.Actions>
@@ -195,8 +192,7 @@ const Home = () => {
             </Dialog>
           </Portal>
         </View>
-      </Provider>
-      
+      </Provider>   
 
     </View>
   )
@@ -207,24 +203,23 @@ export default Home
 const styles = StyleSheet.create({
   container:{
       height: '100%',
-      backgroundColor: '#D0F8F6'
+      backgroundColor: '#8DB2FF'
   },
 
    horizontal: {
       flex: 2,
       flexDirection: 'row',
-      marginTop: 40,
+      marginTop: 45,
       marginLeft: 10,
       
   },
 
     button: {
-      backgroundColor: '#841584',
-      width: '40%',
+      backgroundColor: '#8DB2FF',
+      width: '46%',
       padding: 12,
       borderRadius: 10,
       alignItems: 'center',
- 
   
     },
 
@@ -246,18 +241,23 @@ const styles = StyleSheet.create({
 
     list: {
       flex: 1,
-      
+      marginTop: 5,
 
     },
 
     scroll: {
       height: '75%',
-      marginBottom: 7,
-      backgroundColor: '#F3BDAD',
+      marginBottom: 2,
+      backgroundColor: '#DFE6F6',
+      borderRadius: 10,
+      marginLeft: 10,
+      marginRight: 10,
 
     },
 
-    add: {height: 30, marginLeft: 10, alignItems: 'center'},
+    add: {height: '80%', margin: 5},
+
+    header: { marginLeft: 10, textAlign: 'center', fontFamily: 'serif'},
    
 
 

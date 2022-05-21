@@ -11,7 +11,7 @@ import { auth } from '../firebase'
 
     //const ref = db.collection('books');
     let x = "books_" + auth.currentUser?.email.toString();
-    console.log("dzialam ", x);
+    //console.log("collection ", x);
     const ref = db.collection(x);
 
     async function bookRead() {
@@ -20,7 +20,6 @@ import { auth } from '../firebase'
         });
     }
 
-   // console.log(author);
 
 
     // MODIFY
@@ -29,27 +28,17 @@ import { auth } from '../firebase'
     const [newAuthor, setNewAuthor] = useState("");
     const [isModalVisible, setModalVisible] = useState(false);
 
-  /*   const [visible, setVisible] = React.useState(false);
-
-    const showDialog = () => setVisible(true);
-  
-    const hideDialog = () => setVisible(false); */
-
 
     const modifyBook = () => {
         setModalVisible(true);
         setNewTitle(title);
         setNewAuthor(author);
-        
 
-        
-        //console.log('tytul aktualny --------', title);
-        //console.log('tytul nowy --------', newTitle);
     }
 
     async function saveEdit(){
-        console.log('tytul aktualny --------', title);
-        console.log('tytul nowy --------', newTitle);
+        //console.log('tytul aktualny --------', title);
+        //console.log('tytul nowy --------', newTitle);
          await ref.doc(id).update({        
                 title: newTitle,
                 author: newAuthor       
@@ -63,9 +52,6 @@ import { auth } from '../firebase'
         setModalVisible(false); 
        
     }
-
-
-
 
     const closeModal = () => {
         setModalVisible(false);
@@ -97,21 +83,25 @@ import { auth } from '../firebase'
                     onRequestClose={() => setModalVisible(false)} >
                     <ScrollView style={styles.modalView}>
                     
-
-                        <TextInput placeholder={title} value={newTitle} onChangeText={(text) => {setNewTitle(text)}}
+                    <View style={{justifyContent: 'center', alignItems: 'center'}}>
+                    <TextInput placeholder={title} value={newTitle} onChangeText={(text) => {setNewTitle(text)}}
                                 style={styles.modalTextBoxes} editable={true}></TextInput> 
                          <TextInput placeholder={author} value={newAuthor} onChangeText={(text) => {setNewAuthor(text)}}
                                 style={styles.modalTextBoxes} editable={true}></TextInput>
 
+                    </View>
+
+                        
+
                         <View style={styles.horizontal}>
                        
-                        <TouchableOpacity onPress={() => saveEdit()} style={styles.buttonM} title='modify'>
+                        <TouchableOpacity onPress={() => saveEdit()} style={styles.buttonM}>
                             <Text style={styles.textM}>modify</Text>
                         </TouchableOpacity> 
-                        <TouchableOpacity onPress={() => deleteData()} style={styles.buttonM} title='delete'>
+                        <TouchableOpacity onPress={() => deleteData()} style={styles.buttonM}>
                             <Text style={styles.textM}>delete</Text>
                         </TouchableOpacity> 
-                        <TouchableOpacity onPress={() => closeModal()} style={styles.buttonM} title='x'>
+                        <TouchableOpacity onPress={() => closeModal()} style={styles.buttonM}>
                             <Text style={styles.textM}>close</Text>
                         </TouchableOpacity>                   
 
@@ -123,9 +113,12 @@ import { auth } from '../firebase'
                 </View>
             )} 
 
-          /*  right={props => (
+            right={props => (
+                <TouchableOpacity onPress={modifyBook} style={styles.button }>
+                        <List.Icon {...props} icon={ 'pencil' } />
+                 </TouchableOpacity>
             
-       )}  */
+       )}  
             
            
             
@@ -147,7 +140,7 @@ const styles = StyleSheet.create({
 
     button: {
         width: '10%',
-        
+        marginRight: 10
        
     },
 
@@ -155,17 +148,20 @@ const styles = StyleSheet.create({
         
         height: '100%',
         width: '100%',
-        backgroundColor: 'white',
+        backgroundColor: '#DFE6F6',
+        borderColor: 'black',
+        borderWidth: 1,
+       
         
     },
 
     modalButton: {  
         width: '100%',
+        
     },
 
     modalButtonModify: {
-        height: 155,
-
+        height: 160,
     },
 
     modalTextBoxes: {
@@ -176,7 +172,7 @@ const styles = StyleSheet.create({
         margin: 5,
         borderWidth: 0.2,
         borderRadius: 5,
-
+        
         
     },
 
@@ -193,7 +189,7 @@ const styles = StyleSheet.create({
 
       buttonEdit: {
           width: 80,
-          backgroundColor: '#841584',
+          backgroundColor: '#8DB2FF',
           height: 30
       },
 
@@ -215,7 +211,7 @@ const styles = StyleSheet.create({
         height: 25,
         margin: 10,
         alignItems: 'center',
-        backgroundColor: '#841584',
+        backgroundColor: '#8DB2FF',
         borderRadius: 10,
       },
 
@@ -226,12 +222,11 @@ const styles = StyleSheet.create({
       },
 
       author: {
-          marginLeft: 10,
+          marginLeft: 5,
           marginTop: 8,
       },
 
       title: {
-        marginLeft: 5,
         fontSize: 18,
       }
 
